@@ -1,16 +1,27 @@
-# React + Vite
+# "ToDo_List"
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Description:**
 
-Currently, two official plugins are available:
+This is a simple training project for CTD React v4 by student Mariia Tsenkush. Every new study week new tasks will be executed to understand, learn and practice React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+**Installation instructions:**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Clone repository on your local mashine using SSH:
 
-## Expanding the ESLint configuration
+git clone git@github.com:MTsenkush/ToDo_List.git
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies: Run npm install to install all required packages
+
+**How to run:**
+
+Start the Developer server using Vite: Run npm run dev
+
+Open your browser and go: http://localhost:5173
+
+Entry Point src/main.jsx
+Core component src/App.jsx
+Technology Stack:
+React (with JSX)
+JavaScript (ES6+)
+Vite
