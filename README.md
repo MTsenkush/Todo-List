@@ -9,7 +9,7 @@ This is a simple training project for CTD React v4 by student Mariia Tsenkush. E
 
 Clone repository on your local mashine using SSH:
 
-git clone git@github.com:MTsenkush/ToDo_List.git
+git clone git@github.com:MTsenkush/Todo-List.git
 
 Install dependencies: Run npm install to install all required packages
 
