@@ -1,5 +1,5 @@
 //displays our <li> items as <ul>
-import TodoListItem from './TodoListItem';
+import TodoListItem from './TodoListItem.jsx';
 
 function TodoList({ todoList, onCompleteTodo }) {
     const filteredTodoList = todoList.filter(todo => !todo.isCompleted);
