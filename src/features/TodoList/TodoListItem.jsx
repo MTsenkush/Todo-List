@@ -7,6 +7,10 @@ function TodoListItem({ todo, onCompleteTodo }) {
     const [isEditing, setIsEditing] = useState(false);
     const [workingTitle, setWorkingTitle] = useState(todo.title);
 
+    function handleEdit(e) {
+        setWorkingTitle(e.target.value);
+    }
+
     function handleCancel() {
         setWorkingTitle(todo.title);
         setIsEditing(false);
@@ -19,7 +23,7 @@ function TodoListItem({ todo, onCompleteTodo }) {
             <>
                 <TextInputWithLabel 
                     value={workingTitle}
-                    onChange={e => setWorkingTitle(e.target.value)}
+                    onChange={handleEdit}
                     elementId={`editTitle${todo.id}`}
                     labelText="Todo"
                 />
