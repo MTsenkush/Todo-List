@@ -1,27 +1,25 @@
 import { useState } from 'react';
 import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../utils/todoValidation.js';
+import { useEditableTitle } from '../../hooks/useEditableTitle.js';
 
 //todo item <li> as a new component
 function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [workingTitle, setWorkingTitle] = useState(todo.title);
-
-    function handleEdit(e) {
-        setWorkingTitle(e.target.value);
-    }
+    const {
+        isEditing,
+        workingTitle,
+        startEditing,
+        cancelEdit,
+        updateTitle,
+        finishEdit
+    } = useEditableTitle(todo.title);
 
     function handleUpdate(event) {
         if (!isEditing) return;
         event.preventDefault();
-        onUpdateTodo({ ...todo, title: workingTitle });
-        setIsEditing(false);
-    }
-
-    function handleCancel() {
-        setWorkingTitle(todo.title);
-        setIsEditing(false);
+        const finalTitle = finishEdit();
+        onUpdateTodo({ ...todo, title: finalTitle });
     }
 
     return (
@@ -31,11 +29,11 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
             <>
                 <TextInputWithLabel 
                     value={workingTitle}
-                    onChange={handleEdit}
+                    onChange={e => updateTitle(e.target.value)}
                     elementId={`editTitle${todo.id}`}
                     labelText="Todo"
                 />
-                <button type="button" onClick={handleCancel}>Cancel</button>
+                <button type="button" onClick={cancelEdit}>Cancel</button>
                 <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
 
             </>
@@ -50,9 +48,7 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
             />
         </label>
 
-        <span onClick={() => setIsEditing(true)}>
-              {todo.title}
-            </span>
+        <span onClick={startEditing}>{todo.title}</span>
           </>
         )}
       </form>
