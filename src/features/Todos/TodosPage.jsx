@@ -5,14 +5,14 @@ import TodoList from './TodoList/TodoList.jsx';
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
-  const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
 
     // Async function to fetch todos from the server if token is avaliable
     if (!token) return;
     async function fetchTodos() {
-      setIsTodoListLoading(true);
+      setIsLoading(true);
       setError('');
       try {
         const response = await fetch('/api/tasks?limit=100', {
@@ -35,7 +35,7 @@ function TodosPage({ token }) {
       } catch (err) {
         setError(err.message || 'Error fetching todos');
       } finally {
-        setIsTodoListLoading(false);
+        setIsLoading(false);
       }
     }
 
@@ -44,6 +44,7 @@ function TodosPage({ token }) {
 
   // Add a new todo
   async function addTodo(todoTitle) {
+    setIsLoading(true);
     setError('');
     const tempTodo = {
       id: Date.now(),
@@ -74,11 +75,14 @@ function TodosPage({ token }) {
     } catch (err) {
       setTodoList(prev => prev.filter(todo => todo.id !== tempTodo.id));
       setError(err.message || 'Failed to add todo');
+    } finally {
+      setIsLoading(false);
     }
   }
 
   // Update an existing todo
   async function updateTodo(editedTodo) {
+    setIsLoading(true);
     setError('');
     const originalTodo = todoList.find(todo => todo.id === editedTodo.id);
     if (!originalTodo) return;
@@ -114,11 +118,14 @@ function TodosPage({ token }) {
       setTodoList(prev =>
         prev.map(todo => (todo.id === editedTodo.id ? originalTodo : todo))
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
   // Completed Todo mark
   async function completeTodo(id) {
+    setIsLoading(true);
     setError('');
     const originalTodo = todoList.find(todo => todo.id === id);
     if (!originalTodo) return;
@@ -150,6 +157,8 @@ function TodosPage({ token }) {
         setTodoList(prev =>
         prev.map(todo => (todo.id === id ? originalTodo : todo))
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -172,7 +181,7 @@ function TodosPage({ token }) {
       )}
 
       {/* Loading indicator */}
-      {isTodoListLoading && (
+      {isLoading && (
         <div style={{ marginBottom: 8 }}>Loading...</div>
       )}
 
