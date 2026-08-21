@@ -13,6 +13,8 @@ function App() {
 
   return (
     <>
+      
+      {/* part 4 says to pass 3 props to header but does not instruct what to do with them */}
       <Header token={token} onSetToken={setToken} onSetEmail={setEmail} />
       {token
         ? <TodosPage token={token} />

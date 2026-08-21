@@ -24,7 +24,7 @@ function TodosPage({ token }) {
         });
 
         if (response.status === 401) {
-          throw new Error('Unauthorized. Make sure you are logged correctly');
+          throw new Error('Error: Unauthorized');
         }
         if (!response.ok) {
           throw new Error('Failed to fetch tasks');
@@ -67,8 +67,7 @@ function TodosPage({ token }) {
         throw new Error('Failed to add task');
       }
 
-      const data = await response.json();
-      const realTodo = data;
+      const realTodo = await response.json();
       setTodoList(prev =>
         prev.map(todo => (todo.id === tempTodo.id ? realTodo : todo))
       );
