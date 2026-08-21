@@ -40,9 +40,9 @@ function Logon({ onSetEmail, onSetToken }) {
 
   return (
     <div>
-      {authError && <p>{authError}</p>}
-
+      
       <form onSubmit={handleSubmit}>
+        {authError && <p>{authError}</p>}
         <div>
           <label htmlFor="email">Email</label>
 

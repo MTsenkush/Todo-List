@@ -24,7 +24,7 @@ function TodosPage({ token }) {
         });
 
         if (response.status === 401) {
-          throw new Error('unauthorized');
+          throw new Error('Unauthorized. Make sure you are logged correctly');
         }
         if (!response.ok) {
           throw new Error('Failed to fetch tasks');
@@ -157,8 +157,7 @@ function TodosPage({ token }) {
   // Render the component
   return (
     <div>
-      <h1>My Todos</h1>
-
+      
       {/* Error section */}
       {error && (
         <div style={{ color: 'red', marginBottom: 8 }}>
