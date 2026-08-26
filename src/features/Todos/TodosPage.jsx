@@ -10,7 +10,7 @@ function TodosPage({ token }) {
   const [error, setError] = useState('');
   const [filterError, setFilterError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sortBy, setSortBy] = useState('creationDate');
+  const [sortBy, setSortBy] = useState('createdAt');
   const [sortDirection, setSortDirection] = useState('desc');
   const [filterTerm, setFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
@@ -33,6 +33,7 @@ function TodosPage({ token }) {
         const paramsObject = {
           sortBy,
           sortDirection,
+          limit: 100
         };
         if (debouncedFilterTerm) {
           paramsObject.find = debouncedFilterTerm;
@@ -58,7 +59,7 @@ function TodosPage({ token }) {
         setTodoList(data.tasks || []);
         setFilterError('');
       } catch (error) {
-        if (debouncedFilterTerm || sortBy !== 'creationDate' || sortDirection !== 'desc') {
+        if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
           setFilterError(`Error filtering/sorting todos: ${error.message}`);
         } else {
           setError(`Error fetching todos: ${error.message}`);
