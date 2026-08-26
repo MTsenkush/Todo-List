@@ -231,7 +231,7 @@ function TodosPage({ token }) {
           <button
             onClick={() => {
               setFilterTerm('');
-              setSortBy('creationDate');
+              setSortBy('createAt');
               setSortDirection('desc');
               setFilterError('');
             }}
