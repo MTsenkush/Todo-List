@@ -8,16 +8,22 @@ import FilterInput from "../../shared/FilterInput.jsx";
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
-  const [filterError, setFilterError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortDirection, setSortDirection] = useState('desc');
+
   const [filterTerm, setFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+  const [dataVersion, setDataVersion] = useState(0);
+  
+  const [filterError, setFilterError] = useState('');
+
   const handleFilterChange = (newTerm) => {
     setFilterTerm(newTerm);
   };
-  const [dataVersion, setDataVersion] = useState(0);
+
   const invalidateCache = useCallback(() => {
     setDataVersion(prev => prev + 1);
   }, []);
