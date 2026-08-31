@@ -1,11 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
+import SortBy from "../../shared/SortBy.jsx";
+import useDebounce from "../../utils/useDebounce";
+import FilterInput from "../../shared/FilterInput.jsx";
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortDirection, setSortDirection] = useState('desc');
+
+  const [filterTerm, setFilterTerm] = useState('');
+  const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+  const [dataVersion, setDataVersion] = useState(0);
+  
+  const [filterError, setFilterError] = useState('');
+
+  const handleFilterChange = (newTerm) => {
+    setFilterTerm(newTerm);
+  };
+
+  const invalidateCache = useCallback(() => {
+    setDataVersion(prev => prev + 1);
+  }, []);
 
   useEffect(() => {
 
@@ -15,7 +36,17 @@ function TodosPage({ token }) {
       setIsLoading(true);
       setError('');
       try {
-        const response = await fetch('/api/tasks?limit=100', {
+        const paramsObject = {
+          sortBy,
+          sortDirection,
+          limit: 100
+        };
+        if (debouncedFilterTerm) {
+          paramsObject.find = debouncedFilterTerm;
+        }
+        const params = new URLSearchParams(paramsObject);
+
+        const response = await fetch(`/api/tasks?${params}`, {
           method: 'GET',
           headers: {
             'X-CSRF-TOKEN': token
@@ -32,15 +63,20 @@ function TodosPage({ token }) {
 
       const data = await response.json();
         setTodoList(data.tasks || []);
-      } catch (err) {
-        setError(err.message || 'Error fetching todos');
+        setFilterError('');
+      } catch (error) {
+        if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
+          setFilterError(`Error filtering/sorting todos: ${error.message}`);
+        } else {
+          setError(`Error fetching todos: ${error.message}`);
+        }
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchTodos();
-  }, [token]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
 
   // Add a new todo
   async function addTodo(todoTitle) {
@@ -72,6 +108,7 @@ function TodosPage({ token }) {
       setTodoList(prev =>
         prev.map(todo => (todo.id === tempTodo.id ? realTodo : todo))
       );
+      invalidateCache();
     } catch (err) {
       setTodoList(prev => prev.filter(todo => todo.id !== tempTodo.id));
       setError(err.message || 'Failed to add todo');
@@ -105,12 +142,14 @@ function TodosPage({ token }) {
         body: JSON.stringify({
           title: editedTodo.title,
           isCompleted: editedTodo.isCompleted,
+          createdAt: originalTodo.createdAt
         }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to update todo');
       }
+       invalidateCache();
 
     } catch (err) {
       setError(err.message || 'Failed to update todo');
@@ -145,12 +184,16 @@ function TodosPage({ token }) {
           'X-CSRF-TOKEN': token,
         },
         credentials: 'include',
-        body: JSON.stringify({ isCompleted: true }),
-        });
+        body: JSON.stringify({
+          isCompleted: true,
+          createdAt: originalTodo.createdAt
+        }),
+      });
 
       if (!response.ok) {
         throw new Error('Failed to complete todo');
       }
+      invalidateCache();
 
     } catch (err) {
       setError(err.message || 'Failed to complete todo');
@@ -180,10 +223,49 @@ function TodosPage({ token }) {
         </div>
       )}
 
+      {/* Filter error section */}
+      {filterError && (
+        <div style={{ color: 'orange', marginBottom: 8 }}>
+          <p>{filterError}</p>
+          <button
+            style={{ marginRight: 8 }}
+            onClick={() => setFilterError('')}
+            type="button"
+          >
+            Clear Filter Error
+          </button>
+          <button
+            onClick={() => {
+              setFilterTerm('');
+              setSortBy('createdAt');
+              setSortDirection('desc');
+              setFilterError('');
+            }}
+            type="button"
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
+
       {/* Loading indicator */}
       {isLoading && (
         <div style={{ marginBottom: 8 }}>Loading...</div>
       )}
+
+       {/* Sort options */}
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
+
+      {/* Filter input */}
+      <FilterInput
+        filterTerm={filterTerm}
+        onFilterChange={handleFilterChange}
+      />
 
       {/* Form and todo list */}
       <TodoForm onAddTodo={addTodo} />
@@ -191,6 +273,7 @@ function TodosPage({ token }) {
         todoList={todoList}
         onUpdateTodo={updateTodo}
         onCompleteTodo={completeTodo}
+        dataVersion={dataVersion}
       />
     </div>
   );
