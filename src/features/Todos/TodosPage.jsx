@@ -214,6 +214,7 @@ function TodosPage({ token }) {
         credentials: 'include',
         body: JSON.stringify({
           isCompleted: true,
+          createdAt: originalTodo.createdAt
         }),
       });
 

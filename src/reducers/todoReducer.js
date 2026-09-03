@@ -68,6 +68,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
+        isTodoListLoading: true,
         error: '',
         todoList: [action.payload.tempTodo, ...state.todoList],
       };
@@ -75,6 +76,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_SUCCESS:
       return {
         ...state,
+        isTodoListLoading: false,
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.tempTodoId ? action.payload.realTodo : todo
         ),
@@ -83,6 +85,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_ERROR:
       return {
         ...state,
+        isTodoListLoading: false,
         error: action.payload.message,
         todoList: state.todoList.filter(
           (todo) => todo.id !== action.payload.tempTodoId
@@ -92,6 +95,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
         ...state,
+        isTodoListLoading: true,
         error: '',
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.editedTodo.id
@@ -103,11 +107,13 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
       return {
         ...state,
+        isTodoListLoading: false,
       };
 
     case TODO_ACTIONS.UPDATE_TODO_ERROR:
       return {
         ...state,
+        isTodoListLoading: false,
         error: action.payload.message,
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.originalTodo.id
@@ -119,6 +125,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_START:
       return {
         ...state,
+        isTodoListLoading: true,
         error: '',
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.id
@@ -130,11 +137,13 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
       return {
         ...state,
+        isTodoListLoading: false,
       };
 
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
       return {
         ...state,
+        isTodoListLoading: false,
         error: action.payload.message,
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.originalTodo.id
