@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const res = await fetch("/api/users/logoff", {
+      const res = await fetch("/api/user/logoff", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
