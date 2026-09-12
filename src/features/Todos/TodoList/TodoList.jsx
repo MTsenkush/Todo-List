@@ -17,7 +17,7 @@ function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion, statusF
         break;
     }
         return {
-            version: dataVersion, // Include version in the returned object to track changes
+            version: dataVersion,
             todos: filteredTodos
         };
     }, [todoList, dataVersion, statusFilter]);

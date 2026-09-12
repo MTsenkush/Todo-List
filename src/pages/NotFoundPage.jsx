@@ -13,6 +13,8 @@ function NotFoundPage() {
         <Link to="/" className="btn-link">
           Back to Home Page
         </Link>
+        <Link to="/todos">Todos</Link>
+        <Link to="/about">About</Link>
       </div>
     </div>
   );

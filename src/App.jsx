@@ -9,7 +9,6 @@ import NotFoundPage from './pages/NotFoundPage';
 import RequireAuth from './components/RequireAuth';
 import Header from './shared/Header.jsx';
 
-//main app component
 function App() {
 
   return (
