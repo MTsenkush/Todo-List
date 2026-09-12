@@ -28,8 +28,8 @@ function Navigation() {
           </NavLink>
         </li>
         
-        <NavLink to="/"> Home </NavLink>
-
+        <li><NavLink to="/"> Home </NavLink></li>
+        
         {isAuthenticated ? (
           <>
             <li>
