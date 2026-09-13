@@ -15,7 +15,7 @@ function HomePage() {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div>
+    <div className="flex items-center text-lg">
       <p>Redirecting...</p>
     </div>
   );

@@ -7,13 +7,14 @@ function TextInputWithLabel({
 }) {
   return (
     <>
-      <label htmlFor={elementId}>{labelText}</label>
+      <label htmlFor={elementId} className="font-medium">{labelText}</label>
       <input
-        type='text'
+        type="text"
         id={elementId}
         ref={ref}
         value={value}
         onChange={onChange}
+        className="border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300"
       />
     </>
   );

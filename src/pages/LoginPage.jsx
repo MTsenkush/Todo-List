@@ -41,11 +41,11 @@ function LoginPage() {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 max-w-md mx-auto">
+      <h2 className="text-lg font-bold mb-6">Login</h2>
       {authError && <p>{authError}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="mb-4">
           <label htmlFor="email">Email</label>
 
           <input
@@ -55,10 +55,11 @@ function LoginPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             disabled={isLoggingOn}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
-        <div>
+        <div className="mb-4">
           <label htmlFor="password">Password</label>
 
           <input
@@ -68,10 +69,15 @@ function LoginPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             disabled={isLoggingOn}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
-        <button type="submit" disabled={isLoggingOn}>
+        <button
+          type="submit"
+          disabled={isLoggingOn}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:cursor-pointer"
+        >
           {isLoggingOn ? "Logging in..." : "Log On"}
         </button>
       </form>

@@ -21,7 +21,10 @@ function TodoForm({ onAddTodo }) {
   };
 
   return (
-    <form onSubmit={handleAddTodo}>
+    <form
+      onSubmit={handleAddTodo}
+      className="flex items-center gap-2 mb-6"
+    >
 
     <TextInputWithLabel
       ref={inputRef}
@@ -31,9 +34,12 @@ function TodoForm({ onAddTodo }) {
       value={workingTodoTitle}
     />
 
-      <button disabled={!isValidTodoTitle(workingTodoTitle)}>
-        Add Todo
-      </button>
+    <button
+      disabled={!isValidTodoTitle(workingTodoTitle)}
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:cursor-pointer"
+    >
+      Add Todo
+    </button>
 
     </form>
   );

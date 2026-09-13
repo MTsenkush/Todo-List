@@ -38,7 +38,7 @@ function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion, statusF
         filteredTodoList.todos.length === 0 ? (
             <p>{getEmptyMessage()}</p>
         ) : (
-        <ul>
+        <ul className="space-y-3">
             {filteredTodoList.todos.map(todo => 
                 <TodoListItem
                 key={todo.id}

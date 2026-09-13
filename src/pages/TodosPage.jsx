@@ -246,16 +246,16 @@ function TodosPage() {
 
   // Render the component
   return (
-    <div>
+    <div className="max-w-3xl mx-auto px-6 py-8">
       
       {/* Error section */}
       {error && (
-        <div style={{ color: 'red', marginBottom: 8 }}>
-          {error}
+        <div className="text-red-500 mb-4">
+          <p>{error}</p>
           <button
-            style={{ marginLeft: 8 }}
             onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
             type="button"
+            className="border border-red-300 rounded px-3 py-1 hover:bg-red-100"
           >
             Clear Error
           </button>
@@ -264,18 +264,19 @@ function TodosPage() {
 
       {/* Filter error section */}
       {filterError && (
-        <div style={{ color: 'orange', marginBottom: 8 }}>
+        <div className="text-orange-500 mb-4">
           <p>{filterError}</p>
           <button
-            style={{ marginRight: 8 }}
             onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
             type="button"
+            className="border border-orange-300 rounded px-3 py-1 hover:bg-orange-100"
           >
             Clear Filter Error
           </button>
           <button
             onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
             type="button"
+            className="border border-orange-300 rounded px-3 py-1 hover:bg-orange-100"
           >
             Reset Filters
           </button>
@@ -284,7 +285,7 @@ function TodosPage() {
 
       {/* Loading indicator */}
       {isTodoListLoading && (
-        <div style={{ marginBottom: 8 }}>Loading...</div>
+        <div className="text-gray-500 mb-4">Loading...</div>
       )}
 
        {/* Sort options */}

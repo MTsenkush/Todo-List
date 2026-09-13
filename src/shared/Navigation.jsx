@@ -5,48 +5,37 @@ function Navigation() {
   const { isAuthenticated } = useAuth();
 
   const navLinkStyle = ({ isActive }) => {
-    return {
-      fontWeight: isActive ? "bold" : "normal",
-      textDecoration: isActive ? "underline" : "none",
-      color: "inherit",
-    };
+    return `hover:text-black hover:font-bold ${isActive ? 'text-black underline font-bold' : 'text-gray-600'}`;
   };
 
   return (
     <nav>
-      <ul
-        style={{
-          listStyle: "none",
-          display: "flex",
-          gap: "1rem",
-          padding: 0,
-        }}
-      >
+      <ul className="flex items-center space-x-6">
         <li>
-          <NavLink to="/about" style={navLinkStyle}>
+          <NavLink to="/about" className={navLinkStyle}>
             About
           </NavLink>
         </li>
         
-        <li><NavLink to="/"> Home </NavLink></li>
+        <li><NavLink to="/" className={navLinkStyle}> Home </NavLink></li>
         
         {isAuthenticated ? (
           <>
             <li>
-              <NavLink to="/todos" style={navLinkStyle}>
+              <NavLink to="/todos" className={navLinkStyle}>
                 Todos
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/profile" style={navLinkStyle}>
+              <NavLink to="/profile" className={navLinkStyle}>
                 Profile
               </NavLink>
             </li>
           </>
         ) : (
           <li>
-            <NavLink to="/login" style={navLinkStyle}>
+            <NavLink to="/login" className={navLinkStyle}>
               Login
             </NavLink>
           </li>

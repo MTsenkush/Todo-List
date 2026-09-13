@@ -33,7 +33,12 @@ function Logoff() {
         <div style={{ color: 'red' }}> {logoffError} </div>
       )}
 
-      <button type="button" onClick={handleLogoff} disabled={isLoggingOff}>
+      <button
+        type="button"
+        onClick={handleLogoff}
+        disabled={isLoggingOff}
+        className="text-gray-600 hover:text-black hover:font-bold hover:cursor-pointer"
+      >
         {isLoggingOff ? 'Logging out...' : 'Log Off'}
       </button> 
     </>
