@@ -1,19 +1,27 @@
-import { useState } from 'react';
-import { useAuth } from "../contexts/AuthContext";
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+import { useAuth } from '../contexts/AuthContext';
 
-function Logon() {
-  const { login } = useAuth();
-  // controlled form inputs for login: email and password
+function LoginPage() {
+  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Error message if autentification is failed
   const [authError, setAuthError] = useState('');
 
-  // loading state
   const [isLoggingOn, setIsLoggingOn] = useState(false);
 
-  //from submission handle
+  const from = location.state?.from?.pathname || '/todos';
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, from]);
+
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoggingOn(true);
@@ -25,6 +33,8 @@ function Logon() {
         if (!result.success) {
           setAuthError(result.error);
         }
+    } catch {
+      setAuthError('An unexpected error occurred.');
     } finally {
       setIsLoggingOn(false);
     }
@@ -32,6 +42,7 @@ function Logon() {
 
   return (
     <div>
+      <h2>Login</h2>
       {authError && <p>{authError}</p>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -68,4 +79,4 @@ function Logon() {
   );
 }
 
-export default Logon;
+export default LoginPage;

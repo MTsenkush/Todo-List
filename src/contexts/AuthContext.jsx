@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  //console.log('Auth context:', context); // Remove this later
+  
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
@@ -47,8 +47,8 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     if (!token) {
-      setEmail("");
-      setToken("");
+      setEmail('');
+      setToken('');
       return { success: true };
     }
 
@@ -62,8 +62,8 @@ export function AuthProvider({ children }) {
         credentials: "include",
       });
 
-      setEmail("");
-      setToken("");
+      setEmail('');
+      setToken('');
 
       if (res.ok) {
         return { success: true };
@@ -72,8 +72,8 @@ export function AuthProvider({ children }) {
       }
     } catch (error) {
       // Clear state even on network error
-      setEmail("");
-      setToken("");
+      setEmail('');
+      setToken('');
       return { success: false, error: "Network error during logout." };
     }
   };

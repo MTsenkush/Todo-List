@@ -1,16 +1,20 @@
 import { useEffect, useReducer, useCallback } from 'react';
-import TodoForm from './TodoForm.jsx';
-import TodoList from './TodoList/TodoList.jsx';
-import SortBy from "../../shared/SortBy.jsx";
-import useDebounce from "../../utils/useDebounce";
-import FilterInput from "../../shared/FilterInput.jsx";
-import { TODO_ACTIONS, initialTodoState,  todoReducer } from '../../reducers/todoReducer';
-import { useAuth } from "../../contexts/AuthContext";
+import { useSearchParams } from 'react-router';
+import TodoForm from '../features/Todos/TodoForm.jsx';
+import TodoList from '../features/Todos/TodoList/TodoList.jsx';
+import SortBy from "../shared/SortBy.jsx";
+import useDebounce from "../utils/useDebounce.js";
+import FilterInput from "../shared/FilterInput.jsx";
+import StatusFilter from '../shared/StatusFilter';
+import { TODO_ACTIONS, initialTodoState,  todoReducer } from '../reducers/todoReducer.js';
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 function TodosPage() {
 
   const { token } = useAuth();  
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
+  const [searchParams] = useSearchParams();
+  const statusFilter = searchParams.get('status') || 'all';
 
   const {
     todoList,
@@ -171,7 +175,6 @@ function TodosPage() {
         body: JSON.stringify({
           title: editedTodo.title,
           isCompleted: editedTodo.isCompleted,
-          createdAt: originalTodo.createdAt
         }),
       });
 
@@ -215,8 +218,8 @@ function TodosPage() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          isCompleted: true,
-          createdAt: originalTodo.createdAt
+          title: originalTodo.title,
+          isCompleted: true
         }),
       });
 
@@ -307,6 +310,8 @@ function TodosPage() {
         }  
       />
 
+      <StatusFilter />
+
       {/* Filter input */}
       <FilterInput
         filterTerm={filterTerm}
@@ -320,6 +325,7 @@ function TodosPage() {
         onUpdateTodo={updateTodo}
         onCompleteTodo={completeTodo}
         dataVersion={dataVersion}
+        statusFilter={statusFilter}
       />
     </div>
   );

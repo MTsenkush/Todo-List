@@ -1,18 +1,42 @@
-//displays our <li> items as <ul>
 import TodoListItem from './TodoListItem.jsx';
 import { useMemo } from 'react';
 
-function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion }) {
-    const filteredTodoList = useMemo(() => {
+function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion, statusFilter = 'all' }) {
+  const filteredTodoList = useMemo(() => {
+    let filteredTodos;
+    switch (statusFilter) {
+      case 'completed':
+        filteredTodos = todoList.filter((todo) => todo.isCompleted);
+        break;
+      case 'active':
+        filteredTodos = todoList.filter((todo) => !todo.isCompleted);
+        break;
+      case 'all':
+      default:
+        filteredTodos = todoList;
+        break;
+    }
         return {
-            version: dataVersion, // Include version in the returned object to track changes
-            todos: todoList.filter(todo => !todo.isCompleted)
+            version: dataVersion,
+            todos: filteredTodos
         };
-    }, [todoList, dataVersion]);
+    }, [todoList, dataVersion, statusFilter]);
+
+    const getEmptyMessage = () => {
+        switch (statusFilter) {
+        case 'completed':
+            return 'No completed todos yet. Complete some tasks to see them here.';
+        case 'active':
+            return 'No active todos. Add a todo above to get started.';
+        case 'all':
+        default:
+            return 'Add todo above to get started.';
+        }
+    };
     
     return (
         filteredTodoList.todos.length === 0 ? (
-            <p>Add todo above to get started</p>
+            <p>{getEmptyMessage()}</p>
         ) : (
         <ul>
             {filteredTodoList.todos.map(todo => 
