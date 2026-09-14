@@ -41,17 +41,18 @@ function TodoForm({ onAddTodo }) {
       onSubmit={handleAddTodo}
       className="flex gap-2 mb-6 flex-col"
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex gap-2 mb-2 flex-col sm:flex-row sm:items-center">
         <TextInputWithLabel
           ref={inputRef}
           onChange={(event) => setWorkingTodoTitle(event.target.value)}
           elementId="todoTitle"
           labelText="Todo"
           value={workingTodoTitle}
+          validationError={validationError}
         />
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:cursor-pointer"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer min-h-11"
         >
           Add Todo
         </button>

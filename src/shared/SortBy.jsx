@@ -7,7 +7,7 @@ function SortBy({ sortBy, sortDirection, onSortByChange, onSortDirectionChange }
           id="sortBySelect"
           value={sortBy}
           onChange={e => onSortByChange(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 bg-white"
+          className="border border-gray-300 rounded px-3 py-2 bg-white min-h-11"
         >
           <option value="createdAt">Creation Date</option>
           <option value="title">Title</option>
@@ -20,7 +20,7 @@ function SortBy({ sortBy, sortDirection, onSortByChange, onSortDirectionChange }
           id="sortDirectionSelect"
           value={sortDirection}
           onChange={e => onSortDirectionChange(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 bg-white"
+          className="border border-gray-300 rounded px-3 py-2 bg-white min-h-11"
         >
           <option value="desc">Descending</option>
           <option value="asc">Ascending</option>

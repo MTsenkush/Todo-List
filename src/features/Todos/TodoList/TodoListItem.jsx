@@ -51,26 +51,27 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
     <li className="border border-gray-200 rounded px-4 py-3">
         <form onSubmit={handleUpdate} className="flex items-center gap-3">
         {isEditing ? (
-            <div className="flex gap-2 flex-col">
+            <div className="flex gap-2 flex-col w-full sm:w-auto">
                 <div className="flex gap-3 flex-col sm:flex-row sm:items-center">
                     <TextInputWithLabel 
                         value={workingTitle}
                         onChange={e => updateTitle(e.target.value)}
                         elementId={`editTitle${todo.id}`}
                         labelText="Todo"
+                        validationError={validationError}
                     />
                     <div className="flex gap-3">
                         <button
                             type="button"
                             onClick={handleCancel}
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:cursor-pointer"
+                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
                         >
                             Cancel
                         </button>
                         <button
                             type="button"
                             onClick={handleUpdate}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
                         >
                             Update
                         </button>
@@ -80,19 +81,22 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
                 {validationError && <p className="text-red-500">{validationError}</p>}
             </div>
         ) : (
-          <>
-            <label>
+            <>
                 <input
                     type="checkbox"
                     id={`checkbox${todo.id}`}
                     checked={todo.isCompleted}
                     onChange={() => !todo.isCompleted && onCompleteTodo(todo.id)}
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                 />
-            </label>
 
-            <span onClick={startEditing}>{todo.title}</span>
-          </>
+                <span
+                    onClick={startEditing}
+                    className={todo.isCompleted ? "line-through text-gray-400" : ""}
+                >
+                    {todo.title}
+                </span>
+            </>
         )}
       </form>
     </li>

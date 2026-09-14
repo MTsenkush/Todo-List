@@ -21,7 +21,7 @@ function StatusFilter() {
         id='statusFilter'
         value={currentStatus}
         onChange={(e) => handleStatusChange(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 bg-white"
+        className="border border-gray-300 rounded px-3 py-2 bg-white min-h-11"
       >
         <option value='all'>All Todos</option>
         <option value='active'>Active Todos</option>
