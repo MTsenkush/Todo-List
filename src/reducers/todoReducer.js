@@ -135,7 +135,7 @@ export function todoReducer(state, action) {
         error: '',
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.id
-            ? { ...todo, isCompleted: true }
+            ? { ...todo, isCompleted: action.payload.isCompleted }
             : todo
         ),
       };

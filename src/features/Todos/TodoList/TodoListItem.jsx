@@ -87,7 +87,7 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo, onDeleteTodo }) {
                         type="checkbox"
                         id={`checkbox${todo.id}`}
                         checked={todo.isCompleted}
-                        onChange={() => !todo.isCompleted && onCompleteTodo(todo.id)}
+                        onChange={() => onCompleteTodo(todo.id, !todo.isCompleted)}
                         className="w-5 h-5"
                     />
 
