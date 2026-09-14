@@ -11,7 +11,7 @@ const todoSchema = z.object({
     .max(100, 'Todo title can not exceed 100 characters')
 });
 
-function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
+function TodoListItem({ todo, onUpdateTodo, onCompleteTodo, onDeleteTodo }) {
 
     const {
         isEditing,
@@ -48,8 +48,8 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
     }
 
     return (
-    <li className="border border-gray-200 rounded px-4 py-3">
-        <form onSubmit={handleUpdate} className="flex items-center gap-3">
+    <li className="border border-gray-200 rounded px-4 py-3 shadow">
+        <form onSubmit={handleUpdate}>
         {isEditing ? (
             <div className="flex gap-2 flex-col w-full sm:w-auto">
                 <div className="flex gap-3 flex-col sm:flex-row sm:items-center">
@@ -81,22 +81,31 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
                 {validationError && <p className="text-red-500">{validationError}</p>}
             </div>
         ) : (
-            <>
-                <input
-                    type="checkbox"
-                    id={`checkbox${todo.id}`}
-                    checked={todo.isCompleted}
-                    onChange={() => !todo.isCompleted && onCompleteTodo(todo.id)}
-                    className="w-5 h-5"
-                />
+            <div className="flex w-full justify-between flex-col sm:flex-row sm:items-center">
+                <div className="flex h-full items-center gap-3 pb-4 sm:pb-0">
+                    <input
+                        type="checkbox"
+                        id={`checkbox${todo.id}`}
+                        checked={todo.isCompleted}
+                        onChange={() => !todo.isCompleted && onCompleteTodo(todo.id)}
+                        className="w-5 h-5"
+                    />
 
-                <span
-                    onClick={startEditing}
-                    className={todo.isCompleted ? "line-through text-gray-400" : ""}
+                    <span
+                        onClick={startEditing}
+                        className={todo.isCompleted ? "line-through text-gray-400" : ""}
+                    >
+                        {todo.title}
+                    </span>
+                </div>
+                <button
+                    type="button"
+                    onClick={() => onDeleteTodo(todo.id)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
                 >
-                    {todo.title}
-                </span>
-            </>
+                    Delete
+                </button>
+            </div>
         )}
       </form>
     </li>

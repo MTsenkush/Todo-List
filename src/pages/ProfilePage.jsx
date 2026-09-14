@@ -53,7 +53,6 @@ function ProfilePage() {
       ? Math.round((todoStats.completed / todoStats.total) * 100)
       : 0;
 
-  // Render UI
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
       <h1 className="text-xl font-bold mb-6">User Profile</h1>

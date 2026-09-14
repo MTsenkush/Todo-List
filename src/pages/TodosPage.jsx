@@ -30,7 +30,6 @@ function TodosPage() {
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
   
   const handleFilterChange = (newTerm) => {
-    // setFilterTerm(newTerm);
     dispatch({
       type: TODO_ACTIONS.SET_FILTER,
       payload: { filterTerm: newTerm },
@@ -38,13 +37,11 @@ function TodosPage() {
   };
 
   const invalidateCache = useCallback(() => {
-    //  setDataVersion(prev => prev + 1);
     dispatch({ type: TODO_ACTIONS.INCREMENT_DATA_VERSION });
   }, []);
 
   useEffect(() => {
 
-    // Async function to fetch todos from the server if token is avaliable
     if (!token) return;
 
     async function fetchTodos() {
@@ -104,7 +101,6 @@ function TodosPage() {
     fetchTodos();
   }, [token, sortBy, sortDirection, debouncedFilterTerm, dataVersion]);
 
-  // Add a new todo
   async function addTodo(todoTitle) {
     const tempTodo = {
       id: Date.now(),
@@ -154,7 +150,6 @@ function TodosPage() {
     } 
   }
 
-  // Update an existing todo
   async function updateTodo(editedTodo) {
     const originalTodo = todoList.find(todo => todo.id === editedTodo.id);
     if (!originalTodo) return;
@@ -199,7 +194,6 @@ function TodosPage() {
     } 
   }
 
-  // Completed Todo mark
   async function completeTodo(id) {
     const originalTodo = todoList.find(todo => todo.id === id);
     if (!originalTodo) return;
@@ -244,7 +238,45 @@ function TodosPage() {
     }
   }
 
-  // Render the component
+  async function deleteTodo(id) {
+    const originalTodo = todoList.find(todo => todo.id === id);
+    if (!originalTodo) return;
+
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: { id },
+    });
+
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': token,
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete todo');
+      }
+
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
+      });
+
+      invalidateCache();
+
+    } catch (err) {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: {
+          originalTodo,
+          message: err.message || 'Failed to delete todo',
+        },
+      });
+    }
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
       
@@ -325,6 +357,7 @@ function TodosPage() {
         todoList={todoList}
         onUpdateTodo={updateTodo}
         onCompleteTodo={completeTodo}
+        onDeleteTodo={deleteTodo}
         dataVersion={dataVersion}
         statusFilter={statusFilter}
       />

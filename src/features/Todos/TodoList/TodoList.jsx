@@ -1,7 +1,7 @@
 import TodoListItem from './TodoListItem.jsx';
 import { useMemo } from 'react';
 
-function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion, statusFilter = 'all' }) {
+function TodoList({ todoList, onUpdateTodo, onCompleteTodo, onDeleteTodo, dataVersion, statusFilter = 'all' }) {
   const filteredTodoList = useMemo(() => {
     let filteredTodos;
     switch (statusFilter) {
@@ -41,10 +41,11 @@ function TodoList({ todoList, onUpdateTodo, onCompleteTodo, dataVersion, statusF
         <ul className="space-y-3">
             {filteredTodoList.todos.map(todo => 
                 <TodoListItem
-                key={todo.id}
-                todo={todo}
-                onUpdateTodo={onUpdateTodo}
-                onCompleteTodo={onCompleteTodo}
+                    key={todo.id}
+                    todo={todo}
+                    onUpdateTodo={onUpdateTodo}
+                    onCompleteTodo={onCompleteTodo}
+                    onDeleteTodo={onDeleteTodo}
                 />
             )}
         </ul>
