@@ -16,41 +16,41 @@ function TodoList({ todoList, onUpdateTodo, onCompleteTodo, onDeleteTodo, dataVe
         filteredTodos = todoList;
         break;
     }
-        return {
-            version: dataVersion,
-            todos: filteredTodos
-        };
-    }, [todoList, dataVersion, statusFilter]);
-
-    const getEmptyMessage = () => {
-        switch (statusFilter) {
-        case 'completed':
-            return 'No completed todos yet. Complete some tasks to see them here.';
-        case 'active':
-            return 'No active todos. Add a todo above to get started.';
-        case 'all':
-        default:
-            return 'Add todo above to get started.';
-        }
+    return {
+      version: dataVersion,
+      todos: filteredTodos
     };
+  }, [todoList, dataVersion, statusFilter]);
+
+  const getEmptyMessage = () => {
+    switch (statusFilter) {
+    case 'completed':
+      return 'No completed todos yet. Complete some tasks to see them here.';
+    case 'active':
+      return 'No active todos. Add a todo above to get started.';
+    case 'all':
+    default:
+      return 'Add todo above to get started.';
+    }
+  };
     
-    return (
-        filteredTodoList.todos.length === 0 ? (
-            <p>{getEmptyMessage()}</p>
-        ) : (
-        <ul className="space-y-3">
-            {filteredTodoList.todos.map(todo => 
-                <TodoListItem
-                    key={todo.id}
-                    todo={todo}
-                    onUpdateTodo={onUpdateTodo}
-                    onCompleteTodo={onCompleteTodo}
-                    onDeleteTodo={onDeleteTodo}
-                />
-            )}
-        </ul>
-        )
-    );
+  return (
+    filteredTodoList.todos.length === 0 ? (
+      <p>{getEmptyMessage()}</p>
+    ) : (
+    <ul className="space-y-3">
+      {filteredTodoList.todos.map(todo => 
+        <TodoListItem
+          key={todo.id}
+          todo={todo}
+          onUpdateTodo={onUpdateTodo}
+          onCompleteTodo={onCompleteTodo}
+          onDeleteTodo={onDeleteTodo}
+        />
+      )}
+    </ul>
+    )
+  );
 }
 
 export default TodoList;

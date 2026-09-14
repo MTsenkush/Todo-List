@@ -30,7 +30,7 @@ function Logoff() {
   return (
     <>
       {logoffError && (
-        <div style={{ color: 'red' }}> {logoffError} </div>
+        <div style={{ color: "red" }}> {logoffError} </div>
       )}
 
       <button
@@ -39,7 +39,7 @@ function Logoff() {
         disabled={isLoggingOff}
         className="text-gray-600 hover:text-black hover:font-bold hover:cursor-pointer"
       >
-        {isLoggingOff ? 'Logging out...' : 'Log Off'}
+        {isLoggingOff ? "Logging out..." : "Log Off"}
       </button> 
     </>
   );

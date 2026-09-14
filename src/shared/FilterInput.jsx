@@ -9,6 +9,7 @@ function FilterInput({ filterTerm, onFilterChange }) {
         onChange={e => onFilterChange(e.target.value)}
         placeholder="Search by title..."
         className="border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 min-h-11"
+        maxLength={100}
       />
     </div>
   );

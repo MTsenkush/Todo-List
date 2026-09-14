@@ -18,14 +18,14 @@ function StatusFilter() {
     <div className="flex items-center gap-2 mb-6">
       <label htmlFor="statusFilter" className="font-medium">Show:</label>
       <select
-        id='statusFilter'
+        id="statusFilter"
         value={currentStatus}
         onChange={(e) => handleStatusChange(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 bg-white min-h-11"
       >
-        <option value='all'>All Todos</option>
-        <option value='active'>Active Todos</option>
-        <option value='completed'>Completed Todos</option>
+        <option value="all">All Todos</option>
+        <option value="active">Active Todos</option>
+        <option value="completed">Completed Todos</option>
       </select>
     </div>
   );
