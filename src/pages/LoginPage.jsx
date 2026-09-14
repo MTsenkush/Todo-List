@@ -1,6 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
+import { z } from 'zod';
 import { useAuth } from '../contexts/AuthContext';
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .email('Enter valid email'),
+
+  password: z
+    .string()
+    .min(1, 'Password is required')
+});
 
 function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -11,6 +24,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
 
   const [authError, setAuthError] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
 
   const [isLoggingOn, setIsLoggingOn] = useState(false);
 
@@ -24,11 +38,24 @@ function LoginPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setIsLoggingOn(true);
     setAuthError('');
+    setValidationErrors({});
+
+    const validationResult = loginSchema.safeParse({email, password});
+    
+    if (!validationResult.success) {
+      const errors = validationResult.error.flatten().fieldErrors;
+      setValidationErrors({
+        email: errors.email?.[0],
+        password: errors.password?.[0]
+      });
+      return;
+    }
+
+    setIsLoggingOn(true);
 
     try {
-      const result = await login(email, password);
+      const result = await login(validationResult.data.email, validationResult.data.password);
 
         if (!result.success) {
           setAuthError(result.error);
@@ -43,7 +70,7 @@ function LoginPage() {
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 max-w-md mx-auto">
       <h2 className="text-lg font-bold mb-6">Login</h2>
-      {authError && <p>{authError}</p>}
+      {authError && <p className="text-red-500">{authError}</p>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="email">Email</label>
@@ -57,6 +84,8 @@ function LoginPage() {
             disabled={isLoggingOn}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+
+          {validationErrors.email && <p className="text-red-500">{validationErrors.email}</p>}
         </div>
 
         <div className="mb-4">
@@ -71,6 +100,8 @@ function LoginPage() {
             disabled={isLoggingOn}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+
+          {validationErrors.password && <p className="text-red-500">{validationErrors.password}</p>}
         </div>
 
         <button
