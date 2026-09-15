@@ -1,6 +1,6 @@
 function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-8">
+    <div className="px-6 py-8">
       <h1 className="text-xl font-bold pb-2">About this Todo Application</h1>
       <p className="text-gray-700 leading-relaxed mb-8">
         This project demonstrates modern web development practices with task management, user authentication, and client-side routing.

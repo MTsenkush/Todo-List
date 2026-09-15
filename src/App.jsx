@@ -7,11 +7,12 @@ import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import RequireAuth from './components/RequireAuth';
 import Header from './shared/Header.jsx';
+import Footer from './shared/Footer.jsx';
 
 function App() {
 
   return (
-    <>
+    <div className="flex flex-col bg-white shadow-md rounded max-w-4xl mx-auto min-h-screen">
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -26,7 +27,7 @@ function App() {
             </RequireAuth>
           }
         />
-        
+
         <Route
           path="/profile"
           element={
@@ -38,7 +39,8 @@ function App() {
         
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+      <Footer/>
+    </div>
   );
 }
 

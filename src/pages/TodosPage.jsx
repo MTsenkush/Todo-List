@@ -278,7 +278,7 @@ function TodosPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-8">
+    <div className="px-6 py-8">
       
       {/* Error section */}
       {error && (

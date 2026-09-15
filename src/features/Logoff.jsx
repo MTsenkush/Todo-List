@@ -37,7 +37,7 @@ function Logoff() {
         type="button"
         onClick={handleLogoff}
         disabled={isLoggingOff}
-        className="text-gray-600 hover:text-black hover:font-bold hover:cursor-pointer"
+        className="text-gray-600 hover:text-black hover:font-bold hover:cursor-pointer mt-4 sm:mt-0"
       >
         {isLoggingOff ? "Logging out..." : "Log Off"}
       </button> 
