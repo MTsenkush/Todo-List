@@ -1,4 +1,3 @@
-import './App.css'
 import { Routes, Route } from 'react-router';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -8,29 +7,29 @@ import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import RequireAuth from './components/RequireAuth';
 import Header from './shared/Header.jsx';
+import Footer from './shared/Footer.jsx';
 
 function App() {
 
   return (
-    <>
+    <div className="flex flex-col bg-white shadow-md rounded max-w-4xl mx-auto min-h-screen">
       <Header />
       <Routes>
-        {/* Public routes: /, /about, /login - accessible without authentication */}
-        <Route path='/' element={<HomePage />} />
-        <Route path='/about' element={<AboutPage />} />
-        <Route path='/login' element={<LoginPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected routes: /todos, /profile - require authentication */}
         <Route
-          path='/todos'
+          path="/todos"
           element={
             <RequireAuth>
               <TodosPage />
             </RequireAuth>
           }
         />
+
         <Route
-          path='/profile'
+          path="/profile"
           element={
             <RequireAuth>
               <ProfilePage />
@@ -38,10 +37,10 @@ function App() {
           }
         />
         
-        {/* Catch-all route: * - handles 404 errors for unmatched URLs */}
-        <Route path='*' element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+      <Footer/>
+    </div>
   );
 }
 

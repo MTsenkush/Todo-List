@@ -53,52 +53,44 @@ function ProfilePage() {
       ? Math.round((todoStats.completed / todoStats.total) * 100)
       : 0;
 
-  // Render UI
   return (
-    <div className="profile-container">
-      <h1>User Profile</h1>
+    <div className="px-6 py-8">
+      <h1 className="text-xl font-bold mb-6">User Profile</h1>
 
-      <div className="user-info" style={{ marginBottom: "2rem" }}>
-        <h2>Profile:</h2>
-        <p>Name: {email || "User"} </p>
-        <p>Status: Authenticated Account </p>
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold mb-3">Profile:</h2>
+        <p className="text-gray-700 mb-1"><strong>Name: </strong>{email || "User"} </p>
+        <p className="text-gray-700"><strong>Status:</strong> Authenticated Account </p>
       </div>
 
-      <h2>Todo Statistics</h2>
+      <h2 className="text-lg font-semibold mb-3">Todo Statistics:</h2>
 
-      {loading && <p>Loading statistics...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading && <p className="text-gray-500">Loading statistics...</p>}
+      {error && <p className="text-red-500 font-bold">{error}</p>}
 
       {!loading && !error && (
-        <div
-          className="stats-grid"
-          style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}
-        >
-          <div className="stat-card">
-            <h4>Total:</h4>
-            <p style={{ fontSize: "24px", fontWeight: "bold" }}>
+        <div className="flex gap-4 flex-wrap">
+          <div className="border border-gray-200 rounded px-6 py-4">
+            <h4 className="text-medium text-gray-600">Total</h4>
+            <p className="text-2xl font-bold">
               {todoStats.total}
             </p>
           </div>
-          <div className="stat-card">
-            <h4>Completed</h4>
-            <p style={{ fontSize: "24px", fontWeight: "bold"}}>
+          <div className="border border-gray-200 rounded px-6 py-4">
+            <h4 className="text-medium text-gray-600">Completed</h4>
+            <p className="text-2xl text-green-600 font-bold">
               {todoStats.completed}
             </p>
           </div>
-          <div className="stat-card">
-            <h4>Active</h4>
-            <p
-              style={{ fontSize: "24px", fontWeight: "bold"}}
-            >
+          <div className="border border-gray-200 rounded px-6 py-4">
+            <h4 className="text-medium text-gray-600">Active</h4>
+            <p className="text-2xl text-red-500 font-bold">
               {todoStats.active}
             </p>
           </div>
-          <div className="stat-card">
-            <h4>Completion Rate</h4>
-            <p
-              style={{ fontSize: "24px", fontWeight: "bold"}}
-            >
+          <div className="border border-gray-200 rounded px-6 py-4">
+            <h4 className="text-medium text-gray-600">Completion Rate</h4>
+            <p className="text-2xl text-blue-600 font-bold">
               {completionPercentage}%
             </p>
           </div>

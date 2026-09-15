@@ -1,58 +1,115 @@
+import { useState } from 'react';
+import { z } from 'zod';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
-import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 import { useEditableTitle } from '../../../hooks/useEditableTitle.js';
 
-//todo item <li> as a new component
-function TodoListItem({ todo, onUpdateTodo, onCompleteTodo }) {
+const todoSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, 'Title is required')
+    .max(100, 'Todo title can not exceed 100 characters')
+});
 
-    const {
-        isEditing,
-        workingTitle,
-        startEditing,
-        cancelEdit,
-        updateTitle,
-        finishEdit
-    } = useEditableTitle(todo.title);
+function TodoListItem({ todo, onUpdateTodo, onCompleteTodo, onDeleteTodo }) {
 
-    function handleUpdate(event) {
-        if (!isEditing) return;
-        event.preventDefault();
-        const finalTitle = finishEdit();
-        onUpdateTodo({ ...todo, title: finalTitle });
+  const {
+    isEditing,
+    workingTitle,
+    startEditing,
+    cancelEdit,
+    updateTitle,
+    finishEdit
+  } = useEditableTitle(todo.title);
+
+  const [validationError, setValidationError] = useState('');
+
+  function handleUpdate(event) {
+    if (!isEditing) return;
+    event.preventDefault();
+
+    const validationResult = todoSchema.safeParse({title: workingTitle});
+
+    if (!validationResult.success) {
+      const errors = validationResult.error.flatten().fieldErrors;
+      setValidationError(errors.title?.[0]);
+      return;
     }
 
-    return (
-    <li>
-        <form onSubmit={handleUpdate}>
-        {isEditing ? (
-            <>
-                <TextInputWithLabel 
-                    value={workingTitle}
-                    onChange={e => updateTitle(e.target.value)}
-                    elementId={`editTitle${todo.id}`}
-                    labelText="Todo"
-                />
-                <button type="button" onClick={cancelEdit}>Cancel</button>
-                <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+    setValidationError('');
 
-            </>
-        ) : (
-          <>
-        <label>
-            <input
-                type="checkbox"
-                id={`checkbox${todo.id}`}
-                checked={todo.isCompleted}
-                onChange={() => onCompleteTodo(todo.id)}
+    finishEdit();
+    onUpdateTodo({ ...todo, title: validationResult.data.title });
+  }
+
+  function handleCancel() {
+    setValidationError('');
+    cancelEdit();
+  }
+
+  return (
+  <li className="border border-gray-200 rounded px-4 py-3 shadow">
+    <form onSubmit={handleUpdate}>
+      {isEditing ? (
+        <div className="flex gap-2 flex-col w-full sm:w-auto">
+          <div className="flex gap-3 flex-col sm:flex-row sm:items-center">
+            <TextInputWithLabel 
+              value={workingTitle}
+              onChange={e => updateTitle(e.target.value)}
+              elementId={`editTitle${todo.id}`}
+              labelText="Todo"
+              validationError={validationError}
             />
-        </label>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleUpdate}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+          
+          {validationError && <p className="text-red-500 font-bold">{validationError}</p>}
+        </div>
+      ) : (
+        <div className="flex w-full justify-between flex-col sm:flex-row sm:items-center">
+          <div className="flex h-full items-center gap-3 pb-4 sm:pb-0">
+            <input
+              type="checkbox"
+              id={`checkbox${todo.id}`}
+              checked={todo.isCompleted}
+              onChange={() => onCompleteTodo(todo.id, !todo.isCompleted)}
+              className="w-5 h-5"
+            />
 
-        <span onClick={startEditing}>{todo.title}</span>
-          </>
-        )}
-      </form>
-    </li>
-    );
+            <span
+              onClick={startEditing}
+              className={todo.isCompleted ? "line-through text-gray-400" : ""}
+            >
+              {todo.title}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => onDeleteTodo(todo.id)}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:ring-1 focus:shadow-outline hover:cursor-pointer flex-1 sm:flex-none min-h-11"
+          >
+            Delete
+          </button>
+        </div>
+      )}
+    </form>
+  </li>
+  );
 }
 
 export default TodoListItem;
