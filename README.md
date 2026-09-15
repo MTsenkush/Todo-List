@@ -341,6 +341,13 @@ Possible future improvements include:
 - Expanded user profile functionality
 
 
+📄 **LICENSE INFORMATION**
+
+This project was created for educational purposes as part of the Code the Dream React curriculum.
+
+The frontend implementation in this repository was developed by Mariia Tsenkush. The backend API and related backend services are provided by Code the Dream and are not part of this repository.
+
+
 📬 **CONTACT ME**
 
 
