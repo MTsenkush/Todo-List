@@ -294,7 +294,6 @@ function TodosPage() {
         </div>
       )}
 
-      {/* Filter error section */}
       {filterError && (
         <div className="text-orange-500 mb-4">
           <p>{filterError}</p>
@@ -315,12 +314,10 @@ function TodosPage() {
         </div>
       )}
 
-      {/* Loading indicator */}
       {isTodoListLoading && (
         <div className="text-gray-500 mb-4">Loading...</div>
       )}
 
-       {/* Sort options */}
       <SortBy
         sortBy={sortBy}
         sortDirection={sortDirection}
@@ -344,14 +341,12 @@ function TodosPage() {
       />
 
       <StatusFilter />
-
-      {/* Filter input */}
+    
       <FilterInput
         filterTerm={filterTerm}
         onFilterChange={handleFilterChange}
       />
 
-      {/* Form and todo list */}
       <TodoForm onAddTodo={addTodo} />
       <TodoList
         todoList={todoList}

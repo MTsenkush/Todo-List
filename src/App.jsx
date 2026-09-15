@@ -14,12 +14,10 @@ function App() {
     <>
       <Header />
       <Routes>
-        {/* Public routes: /, /about, /login - accessible without authentication */}
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected routes: /todos, /profile - require authentication */}
         <Route
           path="/todos"
           element={
@@ -28,6 +26,7 @@ function App() {
             </RequireAuth>
           }
         />
+        
         <Route
           path="/profile"
           element={
@@ -37,7 +36,6 @@ function App() {
           }
         />
         
-        {/* Catch-all route: * - handles 404 errors for unmatched URLs */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
