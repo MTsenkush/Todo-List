@@ -10,7 +10,6 @@ const todoSchema = z.object({
     .max(100, 'Todo title can not exceed 100 characters')
 });
 
-//form to add new todo
 function TodoForm({ onAddTodo }) {
 
   const inputRef = useRef();
