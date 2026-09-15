@@ -59,8 +59,8 @@ function ProfilePage() {
 
       <div className="mb-8">
         <h2 className="text-lg font-semibold mb-3">Profile:</h2>
-        <p className="text-gray-700 mb-1">Name: {email || "User"} </p>
-        <p className="text-gray-700">Status: Authenticated Account </p>
+        <p className="text-gray-700 mb-1"><strong>Name: </strong>{email || "User"} </p>
+        <p className="text-gray-700"><strong>Status:</strong> Authenticated Account </p>
       </div>
 
       <h2 className="text-lg font-semibold mb-3">Todo Statistics:</h2>
@@ -71,7 +71,7 @@ function ProfilePage() {
       {!loading && !error && (
         <div className="flex gap-4 flex-wrap">
           <div className="border border-gray-200 rounded px-6 py-4">
-            <h4 className="text-medium text-gray-600">Total:</h4>
+            <h4 className="text-medium text-gray-600">Total</h4>
             <p className="text-2xl font-bold">
               {todoStats.total}
             </p>
