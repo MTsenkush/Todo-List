@@ -72,7 +72,7 @@ function LoginPage() {
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 max-w-md mx-auto">
       <h2 className="text-lg font-bold mb-6">Login</h2>
-      {authError && <p className="text-red-500">{authError}</p>}
+      {authError && <p className="text-red-500 font-bold">{authError}</p>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="email">Email</label>

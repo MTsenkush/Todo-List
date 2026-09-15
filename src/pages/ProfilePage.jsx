@@ -66,7 +66,7 @@ function ProfilePage() {
       <h2 className="text-lg font-semibold mb-3">Todo Statistics:</h2>
 
       {loading && <p className="text-gray-500">Loading statistics...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 font-bold">{error}</p>}
 
       {!loading && !error && (
         <div className="flex gap-4 flex-wrap">
@@ -78,19 +78,19 @@ function ProfilePage() {
           </div>
           <div className="border border-gray-200 rounded px-6 py-4">
             <h4 className="text-medium text-gray-600">Completed</h4>
-            <p className="text-2xl font-bold">
+            <p className="text-2xl text-green-600 font-bold">
               {todoStats.completed}
             </p>
           </div>
           <div className="border border-gray-200 rounded px-6 py-4">
             <h4 className="text-medium text-gray-600">Active</h4>
-            <p className="text-2xl font-bold">
+            <p className="text-2xl text-red-500 font-bold">
               {todoStats.active}
             </p>
           </div>
           <div className="border border-gray-200 rounded px-6 py-4">
             <h4 className="text-medium text-gray-600">Completion Rate</h4>
-            <p className="text-2xl font-bold">
+            <p className="text-2xl text-blue-600 font-bold">
               {completionPercentage}%
             </p>
           </div>

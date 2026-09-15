@@ -78,7 +78,7 @@ function TodoListItem({ todo, onUpdateTodo, onCompleteTodo, onDeleteTodo }) {
             </div>
           </div>
           
-          {validationError && <p className="text-red-500">{validationError}</p>}
+          {validationError && <p className="text-red-500 font-bold">{validationError}</p>}
         </div>
       ) : (
         <div className="flex w-full justify-between flex-col sm:flex-row sm:items-center">

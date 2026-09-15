@@ -57,7 +57,7 @@ function TodoForm({ onAddTodo }) {
         </button>
       </div>
 
-      {validationError && <p className="text-red-500">{validationError}</p>}
+      {validationError && <p className="text-red-500 font-bold">{validationError}</p>}
 
     </form>
   );

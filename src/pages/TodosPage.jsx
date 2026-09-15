@@ -282,12 +282,12 @@ function TodosPage() {
       
       {/* Error section */}
       {error && (
-        <div className="text-red-500 mb-4">
+        <div className="text-red-500 mb-4 font-bold">
           <p>{error}</p>
           <button
             onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
             type="button"
-            className="border border-red-300 rounded px-3 py-1 hover:bg-red-100"
+            className="border border-red-300 rounded px-3 py-1 hover:bg-red-100 hover:cursor-pointer"
           >
             Clear Error
           </button>
@@ -295,22 +295,24 @@ function TodosPage() {
       )}
 
       {filterError && (
-        <div className="text-orange-500 mb-4">
-          <p>{filterError}</p>
-          <button
-            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
-            type="button"
-            className="border border-orange-300 rounded px-3 py-1 hover:bg-orange-100"
-          >
-            Clear Filter Error
-          </button>
-          <button
-            onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
-            type="button"
-            className="border border-orange-300 rounded px-3 py-1 hover:bg-orange-100"
-          >
-            Reset Filters
-          </button>
+        <div className="text-red-500 mb-4 font-bold">
+          <p className="pb-2">{filterError}</p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
+              type="button"
+              className="border border-red-300 rounded px-3 py-1 hover:bg-red-100 hover:cursor-pointer"
+            >
+              Clear Filter Error
+            </button>
+            <button
+              onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
+              type="button"
+              className="border border-red-300 rounded px-3 py-1 hover:bg-red-100 hover:cursor-pointer"
+            >
+              Reset Filters
+            </button>
+          </div>
         </div>
       )}
 

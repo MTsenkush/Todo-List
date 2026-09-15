@@ -3,7 +3,7 @@ import { Link } from "react-router";
 function NotFoundPage() {
   return (
     <div className="text-center px-6 py-8">
-      <h1 className="text-6xl font-bold mb-4">404</h1>
+      <h1 className="text-6xl text-red-500 font-bold mb-4">404</h1>
       <h2 className="text-2xl font-semibold mb-3">Oops! Page Not Found!</h2>
       <p className="text-gray-700 mb-8">
         The destination you are trying to reach does not exist.
